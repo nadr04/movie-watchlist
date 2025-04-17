@@ -23,12 +23,12 @@ public class WatcherService {
         return watcherRepository.findAll();
     }
 
-    public Watcher findWatcherById(Integer id) {
+    public Watcher findWatcherById(String id) {
         return watcherRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
     }
 
-    public Watcher patchWatcherById(Integer id, Watcher watcherFromRequest) {
+    public Watcher patchWatcherById(String id, Watcher watcherFromRequest) {
         Watcher watcherFromDb = watcherRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
 
@@ -56,5 +56,11 @@ public class WatcherService {
         }
 
         return watcherRepository.saveAndFlush(watcherFromDb);
+    }
+    public void deleteWatcherById(String id) {
+        Watcher watcher = watcherRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
+
+        watcherRepository.delete(watcher);
     }
 }
