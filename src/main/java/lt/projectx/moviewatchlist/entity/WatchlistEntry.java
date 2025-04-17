@@ -14,8 +14,7 @@ import java.time.LocalDateTime;
 @Entity
 public class WatchlistEntry {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     @ManyToOne
     private Movie movie;
     @ManyToOne
