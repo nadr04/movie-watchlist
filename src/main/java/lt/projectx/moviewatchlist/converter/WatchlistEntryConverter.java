@@ -26,9 +26,9 @@ public class WatchlistEntryConverter {
     public static GetWatchlistEntryResponse toResponse(WatchlistEntry entry) {
         return new GetWatchlistEntryResponse(
                 entry.getId(),
-                MovieConverter.toResponse(entry.getMovie()),
-                WatcherConverter.toResponse(entry.getWatcher()),
-                entry.getStatus(),
+                entry.getMovie().getTitle(),
+                entry.getWatcher().getUsername(),
+                entry.getStatus().toString(),
                 entry.getRating(),
                 entry.getDateAdded()
         );

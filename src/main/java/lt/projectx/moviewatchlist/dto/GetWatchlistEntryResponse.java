@@ -5,10 +5,9 @@ import java.time.LocalDateTime;
 
 public record GetWatchlistEntryResponse(
         String id,
-        GetMovieResponse movie,
-        GetWatcherResponse watcher,
-        lt.projectx.moviewatchlist.entity.WatchlistStatus status,
+        String movieTitle,
+        String watcherUsername,
+        String status,
         BigDecimal rating,
         LocalDateTime dateAdded
-) {
-}
+) {}

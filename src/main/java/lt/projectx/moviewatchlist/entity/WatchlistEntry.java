@@ -15,13 +15,13 @@ import java.time.LocalDateTime;
 public class WatchlistEntry {
     @Id
     private String id;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Movie movie;
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Watcher watcher;
     private LocalDateTime dateAdded;
     @Enumerated(EnumType.STRING)
     private WatchlistStatus status;
-    @Column(precision = 2, scale = 1)
+    @Column(precision = 3, scale = 1)
     private BigDecimal rating;
 }
