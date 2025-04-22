@@ -56,6 +56,6 @@ public class WatcherDataLoader implements CommandLineRunner {
     }
 
     private String generateId(int counter) {
-        return String.format("WAT%04d", counter);
+        return String.format("WAT%03d", counter);
     }
 }

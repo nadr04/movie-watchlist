@@ -64,6 +64,6 @@ public class MovieDataLoader implements CommandLineRunner {
     }
 
     private String generateId(int counter) {
-        return String.format("MOV%05d", counter);
+        return String.format("MOV%07d", counter);
     }
 }

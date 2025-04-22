@@ -3,19 +3,33 @@ package lt.projectx.moviewatchlist.service;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lt.projectx.moviewatchlist.converter.MovieConverter;
+import lt.projectx.moviewatchlist.dto.CreateMovieRequest;
 import lt.projectx.moviewatchlist.entity.Movie;
 import lt.projectx.moviewatchlist.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
 @Service
 @RequiredArgsConstructor
 public class MovieService {
+
     private final MovieRepository movieRepository;
 
-    public Movie addMovie(Movie movie) {
-        return movieRepository.saveAndFlush(movie);
+    private String generateMovieId() {
+        String prefix = "MOV";
+        int totalLength = 10;
+        int currentCount = movieRepository.findAll().size() + 1;
+        String numberPart = String.format("%0" + (totalLength - prefix.length()) + "d", currentCount);
+        return prefix + numberPart;
+    }
+
+    public Movie addMovie(CreateMovieRequest request) {
+        Movie movie = MovieConverter.toEntity(request);
+        movie.setId(generateMovieId());
+        return movieRepository.save(movie);
     }
 
     public List<Movie> getAllMovies() {

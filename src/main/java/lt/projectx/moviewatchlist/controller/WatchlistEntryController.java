@@ -1,74 +1,68 @@
 package lt.projectx.moviewatchlist.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lt.projectx.moviewatchlist.dto.CreateWatchlistEntryRequest;
+import lt.projectx.moviewatchlist.dto.GetWatchlistEntryResponse;
+import lt.projectx.moviewatchlist.dto.UpdateWatchlistEntryRequest;
 import lt.projectx.moviewatchlist.entity.WatchlistEntry;
 import lt.projectx.moviewatchlist.service.WatchlistEntryService;
+import lt.projectx.moviewatchlist.converter.WatchlistEntryConverter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
 @RequestMapping("/watchlistEntries")
 @RequiredArgsConstructor
 public class WatchlistEntryController {
+
     private final WatchlistEntryService watchlistEntryService;
 
     @PostMapping
-    public ResponseEntity<WatchlistEntry> addWatchlistEntry(@Valid @RequestBody WatchlistEntry watchlistEntry) {
-        watchlistEntry.setDateAdded(LocalDateTime.now());
-        WatchlistEntry createdWatchlistEntry = watchlistEntryService.addWatchlistEntry(watchlistEntry);
-        return ResponseEntity
-                .created(URI.create("/watchlistEntries/" + createdWatchlistEntry.getId()))
-                .body(createdWatchlistEntry);
+    public ResponseEntity<GetWatchlistEntryResponse> addWatchlistEntry(@Valid @RequestBody CreateWatchlistEntryRequest request) {
+        WatchlistEntry entry = watchlistEntryService.addWatchlistEntry(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(WatchlistEntryConverter.toResponse(entry));
     }
 
     @GetMapping
-    public ResponseEntity<List<WatchlistEntry>> getAllWatchlistEntries() {
-        List<WatchlistEntry> watchlistEntries = watchlistEntryService.getAllWatchlistEntries();
-        return ResponseEntity.ok(watchlistEntries);
+    public ResponseEntity<List<GetWatchlistEntryResponse>> getAllWatchlistEntries() {
+        List<WatchlistEntry> entries = watchlistEntryService.getAllWatchlistEntries();
+        List<GetWatchlistEntryResponse> response = entries.stream()
+                .map(WatchlistEntryConverter::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<WatchlistEntry> getWatchlistEntryById(@PathVariable String id) {
-        try {
-            WatchlistEntry watchlistEntry = watchlistEntryService.findWatchlistEntryById(id);
-            return ResponseEntity.ok(watchlistEntry);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<GetWatchlistEntryResponse> getWatchlistEntryById(@PathVariable String id) {
+        WatchlistEntry entry = watchlistEntryService.findWatchlistEntryById(id);
+        return ResponseEntity.ok(WatchlistEntryConverter.toResponse(entry));
     }
 
     @GetMapping("/watcher/{watcherId}")
-    public ResponseEntity<List<WatchlistEntry>> getWatchlistEntriesByWatcherId(@PathVariable String watcherId) {
-        try {
-            List<WatchlistEntry> entries = watchlistEntryService.getWatchlistEntriesByWatcherId(watcherId);
-            return ResponseEntity.ok(entries);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<List<GetWatchlistEntryResponse>> getWatchlistEntriesByWatcherId(@PathVariable String watcherId) {
+        List<WatchlistEntry> entries = watchlistEntryService.getWatchlistEntriesByWatcherId(watcherId);
+        List<GetWatchlistEntryResponse> response = entries.stream()
+                .map(WatchlistEntryConverter::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<WatchlistEntry> updateWatchlistEntry(@PathVariable String id, @RequestBody WatchlistEntry watchlistEntry) {
-        try {
-            WatchlistEntry updatedWatchlistEntry = watchlistEntryService.patchWatchlistEntryById(id, watchlistEntry);
-            return ResponseEntity.ok(updatedWatchlistEntry);
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<GetWatchlistEntryResponse> updateWatchlistEntry(
+            @PathVariable String id,
+            @RequestBody @Valid UpdateWatchlistEntryRequest request
+    ) {
+        WatchlistEntry updatedEntry = watchlistEntryService.updateWatchlistEntry(id, request);
+        return ResponseEntity.ok(WatchlistEntryConverter.toResponse(updatedEntry));
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWatchlistEntry(@PathVariable String id) {
-        try {
-            watchlistEntryService.deleteWatchlistEntryById(id);
-            return ResponseEntity.noContent().build();
-        } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
+        watchlistEntryService.deleteWatchlistEntryById(id);
+        return ResponseEntity.noContent().build();
     }
 }
