@@ -70,4 +70,13 @@ public class MovieService {
 
         movieRepository.delete(movie);
     }
+
+    public List<Movie> filterMovies(String title, String genre, String director, Integer releaseYear) {
+        return movieRepository.findAll().stream()
+                .filter(m -> title == null || m.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .filter(m -> genre == null || m.getGenre().equalsIgnoreCase(genre))
+                .filter(m -> director == null || m.getDirector().equalsIgnoreCase(director))
+                .filter(m -> releaseYear == null || m.getReleaseYear().equals(releaseYear))
+                .toList();
+    }
 }

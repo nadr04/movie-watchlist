@@ -3,7 +3,6 @@ package lt.projectx.moviewatchlist.service;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import lt.projectx.moviewatchlist.converter.WatcherConverter;
 import lt.projectx.moviewatchlist.dto.CreateWatcherRequest;
 import lt.projectx.moviewatchlist.entity.Watcher;
 import lt.projectx.moviewatchlist.repository.WatcherRepository;
@@ -78,5 +77,13 @@ public class WatcherService {
                 .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
 
         watcherRepository.delete(watcher);
+    }
+
+    public List<Watcher> filterWatchers(String username, String email, String name) {
+        return watcherRepository.findAll().stream()
+                .filter(w -> username == null || w.getUsername().equalsIgnoreCase(username))
+                .filter(w -> email == null || w.getEmail().equalsIgnoreCase(email))
+                .filter(w -> name == null || w.getName().equalsIgnoreCase(name))
+                .toList();
     }
 }
