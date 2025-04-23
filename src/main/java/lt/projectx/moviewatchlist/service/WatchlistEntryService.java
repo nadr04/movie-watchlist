@@ -1,7 +1,6 @@
 package lt.projectx.moviewatchlist.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.converter.WatchlistEntryConverter;
 import lt.projectx.moviewatchlist.dto.CreateWatchlistEntryRequest;
@@ -91,5 +90,13 @@ public class WatchlistEntryService {
         WatchlistEntry entry = watchlistEntryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watchlist entry with id " + id + " not found"));
         watchlistEntryRepository.delete(entry);
+    }
+
+    public List<WatchlistEntry> filterEntries(String movieTitle, String watcherUsername, String status) {
+        return watchlistEntryRepository.findAll().stream()
+                .filter(entry -> movieTitle == null || entry.getMovie().getTitle().equalsIgnoreCase(movieTitle))
+                .filter(entry -> watcherUsername == null || entry.getWatcher().getUsername().equalsIgnoreCase(watcherUsername))
+                .filter(entry -> status == null || entry.getStatus().name().equalsIgnoreCase(status))
+                .toList();
     }
 }

@@ -1,5 +1,6 @@
 package lt.projectx.moviewatchlist.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.dto.CreateWatchlistEntryRequest;
@@ -64,5 +65,20 @@ public class WatchlistEntryController {
     public ResponseEntity<Void> deleteWatchlistEntry(@PathVariable String id) {
         watchlistEntryService.deleteWatchlistEntryById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<List<GetWatchlistEntryResponse>> filterWatchlistEntries(
+            @RequestParam(required = false) String movieTitle,
+            @RequestParam(required = false) String watcherUsername,
+            @RequestParam(required = false) String status
+    ) {
+        List<WatchlistEntry> filtered = watchlistEntryService.filterEntries(movieTitle, watcherUsername, status);
+
+        if (filtered.isEmpty()) {
+            throw new EntityNotFoundException("No watchlist entries found matching the provided filters.");
+        }
+
+        return ResponseEntity.ok(filtered.stream().map(WatchlistEntryConverter::toResponse).toList());
     }
 }
