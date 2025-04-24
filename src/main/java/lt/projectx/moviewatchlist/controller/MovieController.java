@@ -1,6 +1,5 @@
 package lt.projectx.moviewatchlist.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.converter.MovieConverter;
@@ -21,19 +20,24 @@ public class MovieController {
     private final MovieService movieService;
 
     @PostMapping
-    public ResponseEntity<Movie> addMovie(@Valid @RequestBody CreateMovieRequest request) {
+    public ResponseEntity<GetMovieResponse> addMovie(@Valid @RequestBody CreateMovieRequest request) {
         Movie savedMovie = movieService.addMovie(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedMovie);
+        return ResponseEntity.status(HttpStatus.CREATED).body(MovieConverter.toResponse(savedMovie));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable String id) {
-        return ResponseEntity.ok(movieService.findMovieById(id));
+    public ResponseEntity<GetMovieResponse> getMovieById(@PathVariable String id) {
+        Movie movie = movieService.findMovieById(id);
+        return ResponseEntity.ok(MovieConverter.toResponse(movie));
     }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
-        return ResponseEntity.ok(movieService.getAllMovies());
+    public ResponseEntity<List<GetMovieResponse>> getAllMovies() {
+        List<Movie> movies = movieService.getAllMovies();
+        List<GetMovieResponse> response = movies.stream()
+                .map(MovieConverter::toResponse)
+                .toList();
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
@@ -42,19 +46,25 @@ public class MovieController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/filter")
-    public ResponseEntity<List<GetMovieResponse>> filterMovies(
+    @GetMapping("/filters")
+    public ResponseEntity<?> filterMovies(
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String genre,
             @RequestParam(required = false) String director,
             @RequestParam(required = false) Integer releaseYear
     ) {
+        if (title == null && genre == null && director == null && releaseYear == null) {
+            return ResponseEntity.badRequest().body("At least one filter parameter must be provided.");
+        }
+
         List<Movie> filtered = movieService.filterMovies(title, genre, director, releaseYear);
 
         if (filtered.isEmpty()) {
-            throw new EntityNotFoundException("No movies found matching the provided filters.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No movies match the provided filters.");
         }
 
-        return ResponseEntity.ok(filtered.stream().map(MovieConverter::toResponse).toList());
+        return ResponseEntity.ok(filtered.stream()
+                .map(MovieConverter::toResponse)
+                .toList());
     }
 }

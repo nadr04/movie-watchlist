@@ -1,6 +1,5 @@
 package lt.projectx.moviewatchlist.service;
 
-import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.dto.CreateWatcherRequest;
@@ -42,48 +41,10 @@ public class WatcherService {
         return watcherRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
     }
-
-    public Watcher patchWatcherById(String id, Watcher watcherFromRequest) {
-        Watcher watcherFromDb = watcherRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
-
-        if (StringUtils.isNotBlank(watcherFromRequest.getUsername()) &&
-                !watcherFromRequest.getUsername().equals(watcherFromDb.getUsername())) {
-            watcherFromDb.setUsername(watcherFromRequest.getUsername());
-        }
-
-        if (StringUtils.isNotBlank(watcherFromRequest.getEmail()) &&
-                !watcherFromRequest.getEmail().equals(watcherFromDb.getEmail())) {
-            watcherFromDb.setEmail(watcherFromRequest.getEmail());
-        }
-
-        if (StringUtils.isNotBlank(watcherFromRequest.getName()) &&
-                !watcherFromRequest.getName().equals(watcherFromDb.getName())) {
-            watcherFromDb.setName(watcherFromRequest.getName());
-        }
-
-        if (watcherFromRequest.getJoinDate() != null &&
-                !watcherFromRequest.getJoinDate().equals(watcherFromDb.getJoinDate())) {
-            if (watcherFromRequest.getJoinDate().isAfter(LocalDate.now())) {
-                throw new IllegalArgumentException("Join date cannot be in the future.");
-            }
-            watcherFromDb.setJoinDate(watcherFromRequest.getJoinDate());
-        }
-
-        return watcherRepository.saveAndFlush(watcherFromDb);
-    }
     public void deleteWatcherById(String id) {
         Watcher watcher = watcherRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watcher with id " + id + " not found"));
 
         watcherRepository.delete(watcher);
-    }
-
-    public List<Watcher> filterWatchers(String username, String email, String name) {
-        return watcherRepository.findAll().stream()
-                .filter(w -> username == null || w.getUsername().equalsIgnoreCase(username))
-                .filter(w -> email == null || w.getEmail().equalsIgnoreCase(email))
-                .filter(w -> name == null || w.getName().equalsIgnoreCase(name))
-                .toList();
     }
 }
