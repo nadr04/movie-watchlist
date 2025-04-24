@@ -86,17 +86,23 @@ public class WatchlistEntryService {
     public List<WatchlistEntry> getWatchlistEntriesByWatcherId(String watcherId) {
         return watchlistEntryRepository.findAllByWatcherId(watcherId);
     }
+
     public void deleteWatchlistEntryById(String id) {
         WatchlistEntry entry = watchlistEntryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watchlist entry with id " + id + " not found"));
         watchlistEntryRepository.delete(entry);
     }
 
-    public List<WatchlistEntry> filterEntries(String movieTitle, String watcherUsername, String status) {
+    public List<WatchlistEntry> filterEntries(String status,
+                                              BigDecimal rating,
+                                              String genre) {
         return watchlistEntryRepository.findAll().stream()
-                .filter(entry -> movieTitle == null || entry.getMovie().getTitle().equalsIgnoreCase(movieTitle))
-                .filter(entry -> watcherUsername == null || entry.getWatcher().getUsername().equalsIgnoreCase(watcherUsername))
-                .filter(entry -> status == null || entry.getStatus().name().equalsIgnoreCase(status))
+                .filter(e -> status == null
+                        || e.getStatus().name().equalsIgnoreCase(status))
+                .filter(e -> rating == null
+                        || e.getRating().compareTo(rating) == 0)
+                .filter(e -> genre == null
+                        || e.getMovie().getGenre().equalsIgnoreCase(genre))
                 .toList();
     }
 }

@@ -1,6 +1,5 @@
 package lt.projectx.moviewatchlist.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.dto.CreateWatchlistEntryRequest;
@@ -13,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -68,17 +68,28 @@ public class WatchlistEntryController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<GetWatchlistEntryResponse>> filterWatchlistEntries(
-            @RequestParam(required = false) String movieTitle,
-            @RequestParam(required = false) String watcherUsername,
-            @RequestParam(required = false) String status
+    public ResponseEntity<?> filterWatchlistEntries(
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) BigDecimal rating,
+            @RequestParam(required = false) String genre
     ) {
-        List<WatchlistEntry> filtered = watchlistEntryService.filterEntries(movieTitle, watcherUsername, status);
-
-        if (filtered.isEmpty()) {
-            throw new EntityNotFoundException("No watchlist entries found matching the provided filters.");
+        if (status == null && rating == null && genre == null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body("At least one of [status, rating, genre] must be provided.");
         }
 
-        return ResponseEntity.ok(filtered.stream().map(WatchlistEntryConverter::toResponse).toList());
+        List<WatchlistEntry> filtered = watchlistEntryService.filterEntries(status, rating, genre);
+
+        if (filtered.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("No watchlist entries match the provided filters.");
+        }
+
+        List<GetWatchlistEntryResponse> dtoList = filtered.stream()
+                .map(WatchlistEntryConverter::toResponse)
+                .toList();
+        return ResponseEntity.ok(dtoList);
     }
 }

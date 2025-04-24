@@ -1,6 +1,5 @@
 package lt.projectx.moviewatchlist.controller;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.converter.WatcherConverter;
@@ -23,39 +22,28 @@ public class WatcherController {
     private final WatcherService watcherService;
 
     @PostMapping
-    public ResponseEntity<Watcher> addWatcher(@Valid @RequestBody CreateWatcherRequest request) {
+    public ResponseEntity<GetWatcherResponse> addWatcher(@Valid @RequestBody CreateWatcherRequest request) {
         Watcher savedWatcher = watcherService.addWatcher(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedWatcher);
+        return ResponseEntity.status(HttpStatus.CREATED).body(WatcherConverter.toResponse(savedWatcher));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Watcher> getWatcherById(@PathVariable String id) {
-        return ResponseEntity.ok(watcherService.findWatcherById(id));
+    public ResponseEntity<GetWatcherResponse> getWatcherById(@PathVariable String id) {
+        Watcher watcher = watcherService.findWatcherById(id);
+        return ResponseEntity.ok(WatcherConverter.toResponse(watcher));
     }
 
     @GetMapping
-    public ResponseEntity<List<Watcher>> getAllWatchers() {
-        return ResponseEntity.ok(watcherService.getAllWatchers());
+    public ResponseEntity<List<GetWatcherResponse>> getAllWatchers() {
+        List<Watcher> allWatchers = watcherService.getAllWatchers();
+        return ResponseEntity.ok(allWatchers.stream()
+                .map(WatcherConverter::toResponse)
+                .toList());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWatcher(@PathVariable String id) {
         watcherService.deleteWatcherById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<List<GetWatcherResponse>> filterWatchers(
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String email,
-            @RequestParam(required = false) String name
-    ) {
-        List<Watcher> filtered = watcherService.filterWatchers(username, email, name);
-
-        if (filtered.isEmpty()) {
-            throw new EntityNotFoundException("No watchers found matching the provided filters.");
-        }
-
-        return ResponseEntity.ok(filtered.stream().map(WatcherConverter::toResponse).toList());
     }
 }
