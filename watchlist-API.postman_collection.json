@@ -1,0 +1,956 @@
+{
+	"info": {
+		"_postman_id": "e72e32d7-c787-493e-ae9f-a6ac5c8f0da7",
+		"name": "watchlist-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42900338"
+	},
+	"item": [
+		{
+			"name": "watchlistEntries",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "get Watchlist Entry By Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/watchlistEntries/WLE000007",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchlistEntries",
+										"WLE000007"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/watchlistEntries/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"watchlistEntries",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"movie\": {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  },\n  \"watcher\": {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  },\n  \"dateAdded\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"rating\": \"<number>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "delete Watchlist Entry",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/watchlistEntries/WLE000008",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchlistEntries",
+										"WLE000008"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/watchlistEntries/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"watchlistEntries",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						},
+						{
+							"name": "update Watchlist Entry",
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"rating\": 6.5\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/watchlistEntries/WLE000009",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchlistEntries",
+										"WLE000009"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"id\": \"<string>\",\n  \"movie\": {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  },\n  \"watcher\": {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  },\n  \"dateAdded\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"rating\": \"<number>\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/watchlistEntries/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"watchlistEntries",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"movie\": {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  },\n  \"watcher\": {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  },\n  \"dateAdded\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"rating\": \"<number>\"\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "get All Watchlist Entries",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/watchlistEntries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"watchlistEntries"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/watchlistEntries",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchlistEntries"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"movie\": {\n      \"id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"genre\": \"<string>\",\n      \"director\": \"<string>\",\n      \"releaseYear\": \"<integer>\",\n      \"runtimeMinutes\": \"<integer>\"\n    },\n    \"watcher\": {\n      \"id\": \"<string>\",\n      \"username\": \"<string>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"joinDate\": \"<date>\"\n    },\n    \"dateAdded\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"rating\": \"<number>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"movie\": {\n      \"id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"genre\": \"<string>\",\n      \"director\": \"<string>\",\n      \"releaseYear\": \"<integer>\",\n      \"runtimeMinutes\": \"<integer>\"\n    },\n    \"watcher\": {\n      \"id\": \"<string>\",\n      \"username\": \"<string>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"joinDate\": \"<date>\"\n    },\n    \"dateAdded\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"rating\": \"<number>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "add Watchlist Entry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"movieId\": \"MOV0000021\",\n  \"watcherId\": \"WAT001\",\n  \"status\": \"WATCHING\"\n  \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/watchlistEntries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"watchlistEntries"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<string>\",\n  \"movie\": {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  },\n  \"watcher\": {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  },\n  \"dateAdded\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"rating\": \"<number>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/watchlistEntries",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchlistEntries"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<string>\",\n  \"movie\": {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  },\n  \"watcher\": {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  },\n  \"dateAdded\": \"<dateTime>\",\n  \"status\": \"<string>\",\n  \"rating\": \"<number>\"\n}"
+						}
+					]
+				},
+				{
+					"name": "get Watchlist Entries By Watcher Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/watchlistEntries/watcher/WAT002",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"watchlistEntries",
+								"watcher",
+								"WAT002"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/watchlistEntries/watcher/:watcherId",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchlistEntries",
+										"watcher",
+										":watcherId"
+									],
+									"variable": [
+										{
+											"key": "watcherId",
+											"value": "<string>",
+											"description": "(Required) "
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"movie\": {\n      \"id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"genre\": \"<string>\",\n      \"director\": \"<string>\",\n      \"releaseYear\": \"<integer>\",\n      \"runtimeMinutes\": \"<integer>\"\n    },\n    \"watcher\": {\n      \"id\": \"<string>\",\n      \"username\": \"<string>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"joinDate\": \"<date>\"\n    },\n    \"dateAdded\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"rating\": \"<number>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"movie\": {\n      \"id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"genre\": \"<string>\",\n      \"director\": \"<string>\",\n      \"releaseYear\": \"<integer>\",\n      \"runtimeMinutes\": \"<integer>\"\n    },\n    \"watcher\": {\n      \"id\": \"<string>\",\n      \"username\": \"<string>\",\n      \"email\": \"<string>\",\n      \"name\": \"<string>\",\n      \"joinDate\": \"<date>\"\n    },\n    \"dateAdded\": \"<dateTime>\",\n    \"status\": \"<string>\",\n    \"rating\": \"<number>\"\n  }\n]"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "watchers",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "get Watcher By Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/watchers/WAT001",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchers",
+										"WAT001"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/watchers/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"watchers",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"username\": \"<string>\",\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"joinDate\": \"<date>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "delete Watcher",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/watchers/WAT002",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchers",
+										"WAT002"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/watchers/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"watchers",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "get All Watchers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/watchers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"watchers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/watchers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"username\": \"<string>\",\n    \"email\": \"<string>\",\n    \"name\": \"<string>\",\n    \"joinDate\": \"<date>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "add Watcher",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"WATCH004\",\n  \"username\": \"boobie\",\n  \"email\": \"xxxlj@gg.lt\",\n  \"name\": \"LOL\",\n  \"joinDate\": \"2022-05-15\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/watchers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"watchers"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<string>\",\n  \"username\": \"<string>\",\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"joinDate\": \"<date>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/watchers",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"watchers"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<string>\",\n  \"username\": \"<string>\",\n  \"email\": \"<string>\",\n  \"name\": \"<string>\",\n  \"joinDate\": \"<date>\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "movies",
+			"item": [
+				{
+					"name": "{id}",
+					"item": [
+						{
+							"name": "get Movie By Id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/movies/MOV0000021",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"movies",
+										"MOV0000021"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "*/*"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/movies/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"movies",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "*/*"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"id\": \"<string>\",\n  \"title\": \"<string>\",\n  \"genre\": \"<string>\",\n  \"director\": \"<string>\",\n  \"releaseYear\": \"<integer>\",\n  \"runtimeMinutes\": \"<integer>\"\n}"
+								}
+							]
+						},
+						{
+							"name": "delete Movie",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/movies/MOV0000013",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"movies",
+										"MOV0000013"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "OK",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/movies/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"movies",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "<string>",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "text",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "text/plain"
+										}
+									],
+									"cookie": [],
+									"body": ""
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "get All Movies",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/movies/filters?genre=horror",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"movies",
+								"filters"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "horror"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"movies"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "[\n  {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"title\": \"<string>\",\n    \"genre\": \"<string>\",\n    \"director\": \"<string>\",\n    \"releaseYear\": \"<integer>\",\n    \"runtimeMinutes\": \"<integer>\"\n  }\n]"
+						}
+					]
+				},
+				{
+					"name": "add Movie",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "*/*"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Interstellar\",\n  \"genre\": \"Sci-Fi\",\n  \"director\": \"Christopher Nolan\",\n  \"releaseYear\": 2014,\n  \"runtimeMinutes\": 169\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/movies",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"movies"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "OK",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "*/*"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"id\": \"<string>\",\n  \"title\": \"<string>\",\n  \"genre\": \"<string>\",\n  \"director\": \"<string>\",\n  \"releaseYear\": \"<integer>\",\n  \"runtimeMinutes\": \"<integer>\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/movies",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"movies"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "*/*"
+								}
+							],
+							"cookie": [],
+							"body": "{\n  \"id\": \"<string>\",\n  \"title\": \"<string>\",\n  \"genre\": \"<string>\",\n  \"director\": \"<string>\",\n  \"releaseYear\": \"<integer>\",\n  \"runtimeMinutes\": \"<integer>\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
