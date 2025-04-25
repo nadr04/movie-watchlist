@@ -46,9 +46,15 @@ public class WatchlistEntryController {
     @GetMapping("/watcher/{watcherId}")
     public ResponseEntity<List<GetWatchlistEntryResponse>> getWatchlistEntriesByWatcherId(@PathVariable String watcherId) {
         List<WatchlistEntry> entries = watchlistEntryService.getWatchlistEntriesByWatcherId(watcherId);
+
+        if (entries.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
         List<GetWatchlistEntryResponse> response = entries.stream()
                 .map(WatchlistEntryConverter::toResponse)
                 .toList();
+
         return ResponseEntity.ok(response);
     }
 
