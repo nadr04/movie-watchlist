@@ -1,5 +1,6 @@
 package lt.projectx.moviewatchlist.controller;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lt.projectx.moviewatchlist.converter.MovieConverter;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/movies")
-@RequiredArgsConstructor
 public class MovieController {
     private final MovieService movieService;
 
@@ -32,11 +33,22 @@ public class MovieController {
     }
 
     @GetMapping
-    public ResponseEntity<List<GetMovieResponse>> getAllMovies() {
-        List<Movie> movies = movieService.getAllMovies();
+    public ResponseEntity<List<GetMovieResponse>> getMovies(
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String genre,
+            @RequestParam(required = false) String director,
+            @RequestParam(required = false) Integer releaseYear
+    ) {
+        List<Movie> movies = movieService.filterMovies(title, genre, director, releaseYear);
+
+        if (movies.isEmpty()) {
+            throw new EntityNotFoundException("No movies found matching criteria.");
+        }
+
         List<GetMovieResponse> response = movies.stream()
                 .map(MovieConverter::toResponse)
                 .toList();
+
         return ResponseEntity.ok(response);
     }
 
@@ -44,27 +56,5 @@ public class MovieController {
     public ResponseEntity<Void> deleteMovie(@PathVariable String id) {
         movieService.deleteMovieById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/filters")
-    public ResponseEntity<?> filterMovies(
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String genre,
-            @RequestParam(required = false) String director,
-            @RequestParam(required = false) Integer releaseYear
-    ) {
-        if (title == null && genre == null && director == null && releaseYear == null) {
-            return ResponseEntity.badRequest().body("At least one filter parameter must be provided.");
-        }
-
-        List<Movie> filtered = movieService.filterMovies(title, genre, director, releaseYear);
-
-        if (filtered.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No movies match the provided filters.");
-        }
-
-        return ResponseEntity.ok(filtered.stream()
-                .map(MovieConverter::toResponse)
-                .toList());
     }
 }

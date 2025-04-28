@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
 @Service
 @RequiredArgsConstructor
 public class MovieService {
@@ -32,8 +31,13 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public List<Movie> getAllMovies() {
-        return movieRepository.findAll();
+    public List<Movie> filterMovies(String title, String genre, String director, Integer releaseYear) {
+        return movieRepository.findAll().stream()
+                .filter(m -> title == null || m.getTitle().toLowerCase().contains(title.toLowerCase()))
+                .filter(m -> genre == null || m.getGenre().equalsIgnoreCase(genre))
+                .filter(m -> director == null || m.getDirector().equalsIgnoreCase(director))
+                .filter(m -> releaseYear == null || m.getReleaseYear().equals(releaseYear))
+                .toList();
     }
 
     public Movie findMovieById(String id) {
@@ -69,14 +73,5 @@ public class MovieService {
                 .orElseThrow(() -> new EntityNotFoundException("Movie with id " + id + " not found"));
 
         movieRepository.delete(movie);
-    }
-
-    public List<Movie> filterMovies(String title, String genre, String director, Integer releaseYear) {
-        return movieRepository.findAll().stream()
-                .filter(m -> title == null || m.getTitle().toLowerCase().contains(title.toLowerCase()))
-                .filter(m -> genre == null || m.getGenre().equalsIgnoreCase(genre))
-                .filter(m -> director == null || m.getDirector().equalsIgnoreCase(director))
-                .filter(m -> releaseYear == null || m.getReleaseYear().equals(releaseYear))
-                .toList();
     }
 }

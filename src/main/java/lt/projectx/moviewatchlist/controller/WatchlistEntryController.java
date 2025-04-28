@@ -12,7 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -71,31 +70,5 @@ public class WatchlistEntryController {
     public ResponseEntity<Void> deleteWatchlistEntry(@PathVariable String id) {
         watchlistEntryService.deleteWatchlistEntryById(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/filter")
-    public ResponseEntity<?> filterWatchlistEntries(
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) BigDecimal rating,
-            @RequestParam(required = false) String genre
-    ) {
-        if (status == null && rating == null && genre == null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body("At least one of [status, rating, genre] must be provided.");
-        }
-
-        List<WatchlistEntry> filtered = watchlistEntryService.filterEntries(status, rating, genre);
-
-        if (filtered.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body("No watchlist entries match the provided filters.");
-        }
-
-        List<GetWatchlistEntryResponse> dtoList = filtered.stream()
-                .map(WatchlistEntryConverter::toResponse)
-                .toList();
-        return ResponseEntity.ok(dtoList);
     }
 }
