@@ -6,7 +6,6 @@ A Spring Boot application to manage watchers, movies, and personalized watchlist
 - **CRUD** on Watchers, Movies, WatchlistEntries
 - **Filtering** supported:
   - **Movies**: by `title`, `genre`, `director`, `releaseYear`
-  - **Watchlist Entries**: by `status`, `rating`, `genre`
 - Uses **DTOs and converters** for all input/output – entities are never exposed directly
 - Returns proper **404 Not Found** responses when resources are missing (e.g., no entries for a watcher)
 - **Swagger UI** available at: [http://localhost:8080/swagger-ui/index.html] (http://localhost:8080/swagger-ui/index.html)
