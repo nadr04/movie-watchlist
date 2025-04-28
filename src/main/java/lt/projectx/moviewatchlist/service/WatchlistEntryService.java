@@ -21,6 +21,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class WatchlistEntryService {
+
     private final WatchlistEntryRepository watchlistEntryRepository;
     private final MovieRepository movieRepository;
     private final WatcherRepository watcherRepository;
@@ -91,18 +92,5 @@ public class WatchlistEntryService {
         WatchlistEntry entry = watchlistEntryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Watchlist entry with id " + id + " not found"));
         watchlistEntryRepository.delete(entry);
-    }
-
-    public List<WatchlistEntry> filterEntries(String status,
-                                              BigDecimal rating,
-                                              String genre) {
-        return watchlistEntryRepository.findAll().stream()
-                .filter(e -> status == null
-                        || e.getStatus().name().equalsIgnoreCase(status))
-                .filter(e -> rating == null
-                        || e.getRating().compareTo(rating) == 0)
-                .filter(e -> genre == null
-                        || e.getMovie().getGenre().equalsIgnoreCase(genre))
-                .toList();
     }
 }
